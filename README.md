@@ -43,7 +43,7 @@ filetree
 
 ### 贡献者
 
-请阅读[CONTRIBUTING.md]() 查阅为该项目做出贡献的开发者。
+请阅读[CONTRIBUTING.md](https://github.com/richuff/study_room_management_backend/blob/main/project_docs/CONTRIBUTING.md) 查阅为该项目做出贡献的开发者。
 
 #### 如何参与开源项目
 
