@@ -1,9 +1,5 @@
-# study_room_management_backend
-> 
-
-<h3 align="center">"完美的"README模板</h3>
+<h3 align="center">study_room_management_backend</h3>
   <p align="center">
-    一个"完美的"README模板去快速开始你的项目！
     <br />
     <a href="https://github.com/richuff/study_room_management_backend/tree/main/project_docs"><strong>探索本项目的文档 »</strong></a>
     <br />
@@ -16,46 +12,28 @@
   </p>
 
 ## 目录
-
-- [上手指南](#上手指南)
-    - [开发前的配置要求](#开发前的配置要求)
-    - [安装步骤](#安装步骤)
 - [文件目录说明](#文件目录说明)
-- [开发的架构](#开发的架构)
 - [使用到的框架](#使用到的框架)
 - [贡献者](#贡献者)
     - [如何参与开源项目](#如何参与开源项目)
 - [协议说明](#协议说明)
-### 上手指南
-###### **安装步骤**
-```sh
-git clone https://github.com/richuff/study_room_management_backend.git
-```
 
 ### 文件目录说明
-
 ```
 filetree 
-├── ARCHITECTURE.md
-├── LICENSE.txt
+├── LICENSE
 ├── README.md
-├── /account/
-├── /bbs/
+├── main.go
 ├── /docs/
-│  ├── /rules/
-│  │  ├── backend.txt
-│  │  └── frontend.txt
-├── manage.py
-├── /oa/
-├── /static/
-├── /templates/
-├── useless.md
-└── /util/
-
+├── /mapper/
+├── /model/
+├── /projecr_docs
+├── /resource/
+├── /result/
+├── /router/
+├── /service
+└── /utils/
 ```
-### 开发的架构
-
-请阅读[ARCHITECTURE.md](https://github.com/shaojintian/Best_README_template/blob/master/ARCHITECTURE.md) 查阅为该项目的架构。
 
 ### 使用到的框架
 
@@ -65,7 +43,7 @@ filetree
 
 ### 贡献者
 
-请阅读**CONTRIBUTING.md** 查阅为该项目做出贡献的开发者。
+请阅读[CONTRIBUTING.md]() 查阅为该项目做出贡献的开发者。
 
 #### 如何参与开源项目
 
