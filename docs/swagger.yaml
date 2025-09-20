@@ -1,0 +1,65 @@
+info:
+  contact: {}
+paths:
+  /api/user/login:
+    post:
+      description: 用户登录接口
+      parameters:
+      - description: email
+        in: body
+        name: email
+        schema:
+          type: string
+      - description: password
+        in: body
+        name: password
+        schema:
+          type: string
+      responses:
+        "200":
+          description: code"}
+          schema:
+            type: string
+      summary: 用户登录
+      tags:
+      - 用户模块
+  /api/user/logoff:
+    post:
+      description: 用户注销接口
+      parameters:
+      - description: email
+        in: body
+        name: email
+        schema:
+          type: string
+      responses:
+        "200":
+          description: code"}
+          schema:
+            type: string
+      summary: 用户注销
+      tags:
+      - 用户模块
+  /api/user/register:
+    post:
+      description: 用户注册接口
+      parameters:
+      - description: email
+        in: body
+        name: email
+        schema:
+          type: string
+      - description: password
+        in: body
+        name: password
+        schema:
+          type: string
+      responses:
+        "200":
+          description: code"}
+          schema:
+            type: string
+      summary: 用户注册
+      tags:
+      - 用户模块
+swagger: "2.0"
