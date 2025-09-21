@@ -7,40 +7,39 @@
         "/api/user/login": {
             "post": {
                 "description": "用户登录接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户模块"
                 ],
                 "summary": "用户登录",
                 "parameters": [
                     {
-                        "description": "email",
-                        "name": "email",
+                        "description": "登录信息",
+                        "name": "req",
                         "in": "body",
+                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "password",
-                        "name": "password",
-                        "in": "body",
-                        "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/dto.UserLoginDto"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\"}",
+                        "description": "业务代码",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/result.CodeResp"
                         }
                     }
                 }
             }
         },
         "/api/user/logoff": {
-            "post": {
+            "get": {
                 "description": "用户注销接口",
                 "tags": [
                     "用户模块"
@@ -48,19 +47,18 @@
                 "summary": "用户注销",
                 "parameters": [
                     {
-                        "description": "email",
-                        "name": "email",
-                        "in": "body",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "type": "integer",
+                        "description": "用户id",
+                        "name": "user_id",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\"}",
+                        "description": "业务代码",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/result.CodeResp"
                         }
                     }
                 }
@@ -69,35 +67,76 @@
         "/api/user/register": {
             "post": {
                 "description": "用户注册接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户模块"
                 ],
                 "summary": "用户注册",
                 "parameters": [
                     {
-                        "description": "email",
-                        "name": "email",
+                        "description": "注册信息",
+                        "name": "req",
                         "in": "body",
+                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "password",
-                        "name": "password",
-                        "in": "body",
-                        "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/dto.UserRegisterDto"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\"}",
+                        "description": "业务代码",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/result.CodeResp"
                         }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.UserLoginDto": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.UserRegisterDto": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "result.CodeResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "业务码，0=成功，非0=错误",
+                    "type": "integer",
+                    "example": 0
+                },
+                "msg": {
+                    "description": "可读提示",
+                    "type": "string",
+                    "example": "success"
                 }
             }
         }

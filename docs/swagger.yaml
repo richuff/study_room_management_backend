@@ -1,64 +1,92 @@
+definitions:
+  dto.UserLoginDto:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  dto.UserRegisterDto:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+  result.CodeResp:
+    properties:
+      code:
+        description: 业务码，0=成功，非0=错误
+        example: 0
+        type: integer
+      msg:
+        description: 可读提示
+        example: success
+        type: string
+    type: object
 info:
   contact: {}
 paths:
   /api/user/login:
     post:
+      consumes:
+      - application/json
       description: 用户登录接口
       parameters:
-      - description: email
+      - description: 登录信息
         in: body
-        name: email
+        name: req
+        required: true
         schema:
-          type: string
-      - description: password
-        in: body
-        name: password
-        schema:
-          type: string
+          $ref: '#/definitions/dto.UserLoginDto'
+      produces:
+      - application/json
       responses:
         "200":
-          description: code"}
+          description: 业务代码
           schema:
-            type: string
+            $ref: '#/definitions/result.CodeResp'
       summary: 用户登录
       tags:
       - 用户模块
   /api/user/logoff:
-    post:
+    get:
       description: 用户注销接口
       parameters:
-      - description: email
-        in: body
-        name: email
-        schema:
-          type: string
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: integer
       responses:
         "200":
-          description: code"}
+          description: 业务代码
           schema:
-            type: string
+            $ref: '#/definitions/result.CodeResp'
       summary: 用户注销
       tags:
       - 用户模块
   /api/user/register:
     post:
+      consumes:
+      - application/json
       description: 用户注册接口
       parameters:
-      - description: email
+      - description: 注册信息
         in: body
-        name: email
+        name: req
+        required: true
         schema:
-          type: string
-      - description: password
-        in: body
-        name: password
-        schema:
-          type: string
+          $ref: '#/definitions/dto.UserRegisterDto'
+      produces:
+      - application/json
       responses:
         "200":
-          description: code"}
+          description: 业务代码
           schema:
-            type: string
+            $ref: '#/definitions/result.CodeResp'
       summary: 用户注册
       tags:
       - 用户模块
