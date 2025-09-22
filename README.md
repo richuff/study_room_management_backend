@@ -17,7 +17,7 @@
 - [贡献者](#贡献者)
     - [如何参与开源项目](#如何参与开源项目)
 - [协议说明](#协议说明)
-
+- [接口文档](#接口文档使用说明)
 ### 文件目录说明
 ```
 filetree 
@@ -59,3 +59,11 @@ filetree
 
 该项目签署了MIT 授权许可，详情请参阅 [LICENSE](https://github.com/richuff/study_room_management_backend/blob/main/LICENSE)
 
+### 接口文档使用说明
+> localhost:8081为swag文档里的设置项,可以自行更改
+```yml
+server:
+  port: localhost:8081
+```
+> 启动项目后访问 [api文档](http://localhost:8081/swagger/index.html) `http://localhost:8081/swagger/index.html`
+> 

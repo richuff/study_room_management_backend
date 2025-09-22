@@ -5,4 +5,4 @@ mysql:
   password: password
   username: root
 server:
-  port: 8081
+  port: localhost:8081
