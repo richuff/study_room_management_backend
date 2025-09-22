@@ -29,6 +29,23 @@ definitions:
 info:
   contact: {}
 paths:
+  /api/room/show:
+    get:
+      description: 自习室查看接口
+      parameters:
+      - description: 自习室id
+        in: query
+        name: room_id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: 业务代码
+          schema:
+            $ref: '#/definitions/result.CodeResp'
+      summary: 查看自习室状态
+      tags:
+      - 自习室模块
   /api/user/login:
     post:
       consumes:

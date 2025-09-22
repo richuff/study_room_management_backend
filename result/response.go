@@ -7,6 +7,13 @@ import (
 
 type Any interface{}
 
+type CodeResp struct {
+	// 业务码，0=成功，非0=错误
+	Code int `json:"code" example:"0"`
+	// 可读提示
+	Msg string `json:"msg" example:"success"`
+}
+
 // Ok 用于返回正确的响应
 func Ok(c *gin.Context, code int, data Any) {
 	if data == nil {

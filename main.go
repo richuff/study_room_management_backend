@@ -11,7 +11,7 @@ func main() {
 	utils.InitMysql()
 
 	r := router.Router()
-	err := r.Run("localhost:" + viper.GetString("server.port"))
+	err := r.Run(viper.GetString("server.port"))
 	if err != nil {
 		return
 	}

@@ -4,6 +4,32 @@
         "contact": {}
     },
     "paths": {
+        "/api/room/show": {
+            "get": {
+                "description": "自习室查看接口",
+                "tags": [
+                    "自习室模块"
+                ],
+                "summary": "查看自习室状态",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "自习室id",
+                        "name": "room_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "业务代码",
+                        "schema": {
+                            "$ref": "#/definitions/result.CodeResp"
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/login": {
             "post": {
                 "description": "用户登录接口",
