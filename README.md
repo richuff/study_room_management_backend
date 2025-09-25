@@ -64,6 +64,24 @@ filetree
 ```yml
 server:
   port: localhost:8081
+mysql:
+  host: 127.0.0.1 #mysql的ip
+  port: 3306 #mysql端口
+  database: study_room_management #mysql数据库
+  password: password #mysql密码
+  username: root #mysql用户名
+redis:
+  addr: localhost:6379 #redis端口ip
+  password: #redis密码
+  db: 0 #使用的redis数据库
 ```
+
+> config.yaml
+```yaml
+storage:
+  local:
+    path: ./storage  #文件的存储目录
+```
+
 > 启动项目后访问 [api文档](http://localhost:8081/swagger/index.html) `http://localhost:8081/swagger/index.html`
 > 
