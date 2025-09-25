@@ -1,4 +1,24 @@
 definitions:
+  dto.AppointmentDto:
+    properties:
+      room_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  dto.UserInfoDto:
+    properties:
+      class:
+        type: string
+      gender:
+        type: integer
+      major:
+        type: string
+      stu_id:
+        type: string
+      user_id:
+        type: integer
+    type: object
   dto.UserLoginDto:
     properties:
       email:
@@ -8,6 +28,8 @@ definitions:
     type: object
   dto.UserRegisterDto:
     properties:
+      code:
+        type: string
       email:
         type: string
       name:
@@ -26,9 +48,77 @@ definitions:
         example: success
         type: string
     type: object
+  user.UploadResp:
+    properties:
+      url:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
+  /api/captcha:
+    get:
+      description: 存储并发送验证码接口
+      parameters:
+      - description: 邮箱
+        in: query
+        name: email
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 业务代码
+          schema:
+            $ref: '#/definitions/result.CodeResp'
+      summary: 存储并发送验证码
+      tags:
+      - 用户模块
+  /api/captcha/verify:
+    get:
+      description: 验证验验证码接口
+      parameters:
+      - description: 用户邮箱
+        in: query
+        name: email
+        required: true
+        type: string
+      - description: 用户输入的验证码
+        in: query
+        name: ucode
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 业务代码
+          schema:
+            $ref: '#/definitions/result.CodeResp'
+      summary: 验证验证码
+      tags:
+      - 用户模块
+  /api/room/appointment:
+    post:
+      consumes:
+      - application/json
+      description: 预约自习室接口
+      parameters:
+      - description: 登录信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AppointmentDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 业务代码
+          schema:
+            $ref: '#/definitions/result.CodeResp'
+      security:
+      - Bearer: []
+      summary: 预约自习室
+      tags:
+      - 自习室模块
   /api/room/show:
     get:
       description: 自习室查看接口
@@ -43,9 +133,28 @@ paths:
           description: 业务代码
           schema:
             $ref: '#/definitions/result.CodeResp'
+      security:
+      - Bearer: []
       summary: 查看自习室状态
       tags:
       - 自习室模块
+  /api/user/checkInfo:
+    get:
+      description: 查看用户信息接口
+      parameters:
+      - description: 用户id
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: 业务代码
+          schema:
+            $ref: '#/definitions/result.CodeResp'
+      summary: 查看用户信息
+      tags:
+      - 用户模块
   /api/user/login:
     post:
       consumes:
@@ -107,4 +216,90 @@ paths:
       summary: 用户注册
       tags:
       - 用户模块
+  /api/user/setAvatar:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 设置用户头像接口
+      parameters:
+      - description: 用户id
+        in: formData
+        name: user_id
+        required: true
+        type: string
+      - description: 头像
+        in: formData
+        name: avatar
+        required: true
+        type: file
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.UploadResp'
+      security:
+      - Bearer: []
+      summary: 设置用户头像
+      tags:
+      - 用户模块
+  /api/user/setInfo:
+    post:
+      consumes:
+      - application/json
+      description: 设置用户信息接口
+      parameters:
+      - description: 登录信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserInfoDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 业务代码
+          schema:
+            $ref: '#/definitions/result.CodeResp'
+      summary: 设置用户信息
+      tags:
+      - 用户模块
+  /test/captcha:
+    get:
+      description: 获取验证码接口
+      responses:
+        "200":
+          description: 业务代码
+          schema:
+            $ref: '#/definitions/result.CodeResp'
+      summary: 获取验证码
+      tags:
+      - 测试模块
+  /test/captcha/verify:
+    get:
+      description: 验证验验证码接口
+      parameters:
+      - description: 验证码ID
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: 用户输入的验证码
+        in: query
+        name: code
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 业务代码
+          schema:
+            $ref: '#/definitions/result.CodeResp'
+      summary: 验证验证码
+      tags:
+      - 测试模块
+securityDefinitions:
+  Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
