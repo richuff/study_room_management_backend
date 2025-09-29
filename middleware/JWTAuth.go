@@ -1,10 +1,10 @@
 package middleware
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 	"net/http"
-	"strings"
 	jwtUtil "study_room_management_backend/jwt"
 )
 
@@ -12,23 +12,14 @@ import (
 func JWTAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 1. 取 Header
-		auth := c.GetHeader("Authorization")
-		if auth == "" {
+		tokenStr := c.GetHeader("Authorization")
+		if tokenStr == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header required"})
 			c.Abort()
 			return
 		}
-
-		// 2. 剥离 Bearer
-		parts := strings.SplitN(auth, " ", 2)
-		if !(len(parts) == 2 && strings.EqualFold(parts[0], "Bearer")) {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Bearer token required"})
-			c.Abort()
-			return
-		}
-		tokenStr := parts[1]
-
-		// 3. 解析 & 校验
+		fmt.Printf(tokenStr)
+		// 2. 解析 & 校验
 		claims := &jwtUtil.Claims{}
 		token, err := jwt.ParseWithClaims(tokenStr, claims, func(t *jwt.Token) (interface{}, error) {
 			return jwtUtil.JwtKey, nil

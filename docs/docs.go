@@ -15,8 +15,111 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/captcha": {
+            "get": {
+                "description": "存储并发送验证码接口",
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "存储并发送验证码",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "邮箱",
+                        "name": "email",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "业务代码",
+                        "schema": {
+                            "$ref": "#/definitions/result.CodeResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/captcha/verify": {
+            "get": {
+                "description": "验证验验证码接口",
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "验证验证码",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户邮箱",
+                        "name": "email",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户输入的验证码",
+                        "name": "ucode",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "业务代码",
+                        "schema": {
+                            "$ref": "#/definitions/result.CodeResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/room/appointment": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "预约自习室接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "自习室模块"
+                ],
+                "summary": "预约自习室",
+                "parameters": [
+                    {
+                        "description": "登录信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.AppointmentDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "业务代码",
+                        "schema": {
+                            "$ref": "#/definitions/result.CodeResp"
+                        }
+                    }
+                }
+            }
+        },
         "/api/room/show": {
             "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "自习室查看接口",
                 "tags": [
                     "自习室模块"
@@ -27,6 +130,32 @@ const docTemplate = `{
                         "type": "integer",
                         "description": "自习室id",
                         "name": "room_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "业务代码",
+                        "schema": {
+                            "$ref": "#/definitions/result.CodeResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/checkInfo": {
+            "get": {
+                "description": "查看用户信息接口",
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "查看用户信息",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "用户id",
+                        "name": "user_id",
                         "in": "query",
                         "required": true
                     }
@@ -134,9 +263,165 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/user/setAvatar": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "设置用户头像接口",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "设置用户头像",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户id",
+                        "name": "user_id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "头像",
+                        "name": "avatar",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/user.UploadResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/setInfo": {
+            "post": {
+                "description": "设置用户信息接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "设置用户信息",
+                "parameters": [
+                    {
+                        "description": "登录信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UserInfoDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "业务代码",
+                        "schema": {
+                            "$ref": "#/definitions/result.CodeResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/test/captcha": {
+            "get": {
+                "description": "获取验证码接口",
+                "tags": [
+                    "测试模块"
+                ],
+                "summary": "获取验证码",
+                "responses": {
+                    "200": {
+                        "description": "业务代码",
+                        "schema": {
+                            "$ref": "#/definitions/result.CodeResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/test/captcha/verify": {
+            "get": {
+                "description": "验证验验证码接口",
+                "tags": [
+                    "测试模块"
+                ],
+                "summary": "验证验证码",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "验证码ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户输入的验证码",
+                        "name": "code",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "业务代码",
+                        "schema": {
+                            "$ref": "#/definitions/result.CodeResp"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "dto.AppointmentDto": {
+            "type": "object",
+            "properties": {
+                "room_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.UserInfoDto": {
+            "type": "object",
+            "properties": {
+                "class": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "integer"
+                },
+                "major": {
+                    "type": "string"
+                },
+                "stu_id": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "dto.UserLoginDto": {
             "type": "object",
             "properties": {
@@ -151,6 +436,9 @@ const docTemplate = `{
         "dto.UserRegisterDto": {
             "type": "object",
             "properties": {
+                "code": {
+                    "type": "string"
+                },
                 "email": {
                     "type": "string"
                 },
@@ -176,6 +464,21 @@ const docTemplate = `{
                     "example": "success"
                 }
             }
+        },
+        "user.UploadResp": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`
