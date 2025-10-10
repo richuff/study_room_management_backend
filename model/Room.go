@@ -27,7 +27,7 @@ const (
 )
 
 const (
-	RoomStatusOffline  uint8 = 0 // 下线
+	RoomStatusOffline  uint8 = 0 // 被占用
 	RoomStatusOnline   uint8 = 1 // 正常
 	RoomStatusMaintain uint8 = 2 // 维护
 )
@@ -41,4 +41,14 @@ func GetRoomById(roomId uint64) *Room {
 	room := &Room{}
 	mapper.Open.Where("room_id=?", roomId).Find(&room)
 	return room
+}
+
+// GetRoomIdle 获取空闲的的自习室
+func GetRoomIdle() []Room {
+	rooms := make([]Room, 10)
+	mapper.Open.Model(Room{}).
+		Where("status = ?", RoomStatusOnline).
+		Find(&rooms)
+
+	return rooms
 }

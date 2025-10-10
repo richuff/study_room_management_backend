@@ -9,4 +9,6 @@ func roomRouter(api *gin.RouterGroup) {
 	roomApi := api.Group("/room")
 	roomApi.GET("/show", room.Show)
 	roomApi.POST("/appointment", room.Appointment)
+	roomApi.GET("/showIdle", room.ShowIdle)
+	roomApi.GET("/showAppointment", room.ShowAppointment)
 }

@@ -38,6 +38,7 @@ func Error(c *gin.Context, message string) {
 // ErrorWithCode 用于返回错误的响应并且附带响应码
 func ErrorWithCode(c *gin.Context, message string, code int) {
 	c.JSON(code, gin.H{
+		"code":    code,
 		"message": message,
 	})
 }

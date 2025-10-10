@@ -144,6 +144,59 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/room/showAppointment": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "预约自习室接口",
+                "tags": [
+                    "自习室模块"
+                ],
+                "summary": "查看预约自习室",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "用户id",
+                        "name": "user_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "业务代码",
+                        "schema": {
+                            "$ref": "#/definitions/result.CodeResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/room/showIdle": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "自习室查看接口",
+                "tags": [
+                    "自习室模块"
+                ],
+                "summary": "查看自空闲习室",
+                "responses": {
+                    "200": {
+                        "description": "业务代码",
+                        "schema": {
+                            "$ref": "#/definitions/result.CodeResp"
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/checkInfo": {
             "get": {
                 "description": "查看用户信息接口",
@@ -153,9 +206,9 @@ const docTemplate = `{
                 "summary": "查看用户信息",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "用户id",
-                        "name": "user_id",
+                        "type": "string",
+                        "description": "用户邮箱",
+                        "name": "email",
                         "in": "query",
                         "required": true
                     }

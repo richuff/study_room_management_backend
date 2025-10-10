@@ -28,3 +28,15 @@ func Show(c *gin.Context) {
 		result.Error(c, "该自习室不存在")
 	}
 }
+
+// ShowIdle
+// @Summary 查看自空闲习室
+// @Tags 自习室模块
+// @Description 自习室查看接口
+// @Success   200 {object} result.CodeResp "业务代码"
+// @Security Bearer
+// @Router /api/room/showIdle [get]
+func ShowIdle(c *gin.Context) {
+	rooms := model.GetRoomIdle()
+	result.Ok(c, 0, rooms)
+}
