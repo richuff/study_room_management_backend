@@ -24,3 +24,9 @@ func InsertAppointment(dto *dto.AppointmentDto) {
 	appointment.CreatedAt = time.Now()
 	mapper.Open.Create(appointment)
 }
+
+func FindAppointment(userId uint64) []Appointment {
+	data := make([]Appointment, 10)
+	mapper.Open.Where("user_id = ?", userId).Find(&data)
+	return data
+}
