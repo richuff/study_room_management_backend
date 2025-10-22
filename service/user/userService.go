@@ -156,17 +156,14 @@ func Logoff(c *gin.Context) {
 // @Summary 查看用户信息
 // @Tags 用户模块
 // @Description 查看用户信息接口
-// @Param user_id query int true "用户id"
+// @Param email query string true "用户邮箱"
 // @Success   200 {object} result.CodeResp "业务代码"
 // @Router /api/user/checkInfo [get]
 func CheckInfo(c *gin.Context) {
-	userId, err := strconv.ParseUint(c.Request.FormValue("user_id"), 10, 64)
-	if utils.ErrHandler(c, err) {
-		return
-	}
+	email := c.Request.FormValue("email")
 
-	user := model.GetUserByUserID(userId)
-	student := model.GetStudentByUserID(userId)
+	user := model.GetUserRe(email)
+	student := model.GetStudentByUserID(user.UserId)
 
 	studentInfoVo := vo.StudentInfoVo{}
 	if user.Name != "" {

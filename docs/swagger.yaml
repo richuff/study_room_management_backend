@@ -138,15 +138,47 @@ paths:
       summary: 查看自习室状态
       tags:
       - 自习室模块
-  /api/user/checkInfo:
+  /api/room/showAppointment:
     get:
-      description: 查看用户信息接口
+      description: 预约自习室接口
       parameters:
       - description: 用户id
         in: query
         name: user_id
         required: true
         type: integer
+      responses:
+        "200":
+          description: 业务代码
+          schema:
+            $ref: '#/definitions/result.CodeResp'
+      security:
+      - Bearer: []
+      summary: 查看预约自习室
+      tags:
+      - 自习室模块
+  /api/room/showIdle:
+    get:
+      description: 自习室查看接口
+      responses:
+        "200":
+          description: 业务代码
+          schema:
+            $ref: '#/definitions/result.CodeResp'
+      security:
+      - Bearer: []
+      summary: 查看自空闲习室
+      tags:
+      - 自习室模块
+  /api/user/checkInfo:
+    get:
+      description: 查看用户信息接口
+      parameters:
+      - description: 用户邮箱
+        in: query
+        name: email
+        required: true
+        type: string
       responses:
         "200":
           description: 业务代码

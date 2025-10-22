@@ -32,3 +32,11 @@ func InitMysql() {
 		return
 	}
 }
+
+func InitRedis() {
+	addr := viper.GetString("redis.addr")
+	password := viper.GetString("redis.password")
+	db := viper.GetInt("redis.db")
+
+	mapper.InitRedis(addr, password, db)
+}
