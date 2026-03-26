@@ -9,18 +9,20 @@ drop table if exists `appointment`;
 drop table if exists `user`;
 create table `user` (
         `user_id` int auto_increment primary key comment "用户id",
-        `email` varchar(255) not null unique comment "邮箱",
-        `name` varchar(100) not null comment "姓名",
-        `password` varchar(255) not null ,
+        `email` varchar(40) not null unique comment "邮箱",
+        `name` varchar(40) not null comment "姓名",
+        `password` varchar(40) not null comment "密码",
+        `avatar` varchar(100) default '/public/default' comment "头像",
         `is_delete` boolean default false,
         `created_at` datetime default CURRENT_TIMESTAMP
 );
 -- 学生信息表
 create table `student`(
-    `stu_id` int auto_increment primary key comment "学号",
+    `stu_id` int primary key comment "学号",
     `user_id` int comment "用户id",
-    `gender` enum('男', '女', '未知') default '未知',
-    `major` varchar(100) comment "专业",
+    `gender` tinyint default '2' comment "1为男 0为女 2为未知",
+    `major` varchar(40) comment "专业",
+    `class` varchar(40) comment "班级",
     foreign key student_user(user_id) references user(user_id)
 );
 
@@ -33,7 +35,7 @@ create table `room`(
     `seat_total`	smallint comment "总座位数",
     `seat_available`	smallint comment 	"可用座位数",
     `room_type`	tinyint	comment "类型 1普通区 2静音区 3讨论区",
-    `desc`	varchar(500) comment "简介",
+    `desc`	varchar(300) comment "简介",
     `open_time`	time	comment "当日开门时间",
     `close_time`	time	comment "关门时间",
     `status`	tinyint	comment "状态",

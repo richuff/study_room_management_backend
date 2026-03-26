@@ -1,8 +1,12 @@
+server:
+  port: localhost:8081
 mysql:
   host: 127.0.0.1
   port: 3306
   database: study_room_management
   password: password
   username: root
-server:
-  port: localhost:8081
+redis:
+  addr: localhost:6379
+  password:
+  db: 0

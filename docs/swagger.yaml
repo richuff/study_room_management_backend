@@ -6,6 +6,17 @@ definitions:
       user_id:
         type: integer
     type: object
+  dto.ForgetPwdDto:
+    properties:
+      code:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      rePassword:
+        type: string
+    type: object
   dto.UserInfoDto:
     properties:
       class:
@@ -185,6 +196,30 @@ paths:
           schema:
             $ref: '#/definitions/result.CodeResp'
       summary: 查看用户信息
+      tags:
+      - 用户模块
+  /api/user/forgetPwd:
+    post:
+      consumes:
+      - application/json
+      description: 忘记密码接口
+      parameters:
+      - description: 忘记密码信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ForgetPwdDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: objec
+      security:
+      - Bearer: []
+      summary: 忘记密码
       tags:
       - 用户模块
   /api/user/login:
