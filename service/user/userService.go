@@ -52,7 +52,6 @@ func Register(c *gin.Context) {
 		result.ErrorWithCode(c, "验证码错误", 0)
 		return
 	}
-
 	user.Password = utils.MakePassword(userRegisterDto.Password)
 	user.IsDelete = false
 	user.Avatar = "/public/default"
@@ -71,6 +70,12 @@ func Register(c *gin.Context) {
 		tokenString, err := token.SignedString(jwtUtil.JwtKey)
 		if err != nil {
 			fmt.Println(err)
+		}
+		_, err = mapper.Rdb.Del(c, userRegisterDto.Email).Result()
+		if err != nil {
+			fmt.Println(err)
+			result.ErrorWithCode(c, "服务器错误", 0)
+			return
 		}
 		result.Ok(c, 1, tokenString)
 	} else {
@@ -255,4 +260,51 @@ func SetAvatar(c *gin.Context) {
 		return
 	}
 	result.Ok(c, 1, UploadResp{URL: url})
+}
+
+// ForgetPwd
+// @Summary 忘记密码
+// @Tags 用户模块
+// @Description 忘记密码接口
+// @Accept    json
+// @Produce   json
+// @Param     req body dto.ForgetPwdDto true "忘记密码信息"
+// @Success   200 {object} result.CodeResp "业务代码"
+// @Security Bearer
+// @Success 200 {objec} UploadResp
+// @Router /api/user/forgetPwd [post]
+func ForgetPwd(c *gin.Context) {
+	forgetPwdDto := &dto.ForgetPwdDto{}
+	if err := c.BindJSON(forgetPwdDto); err != nil {
+		fmt.Println(err)
+		return
+	}
+	user := model.GetUserByEmail(forgetPwdDto.Email)
+	if user.Name == "" {
+		result.ErrorWithCode(c, "该邮箱未注册", 0)
+		return
+	}
+	if user.Password != utils.MakePassword(forgetPwdDto.Password) {
+		result.ErrorWithCode(c, "原密码错误", 0)
+		return
+	}
+	code, err := mapper.Rdb.Get(c, forgetPwdDto.Email).Result()
+	if err != nil {
+		fmt.Println(err)
+		result.ErrorWithCode(c, "服务器错误", 0)
+		return
+	}
+	if code != forgetPwdDto.Code {
+		result.ErrorWithCode(c, "验证码错误", 0)
+		return
+	}
+	user.Password = utils.MakePassword(forgetPwdDto.RePassword)
+	_, err = mapper.Rdb.Del(c, forgetPwdDto.Email).Result()
+	if err != nil {
+		fmt.Println(err)
+		result.ErrorWithCode(c, "服务器错误", 0)
+		return
+	}
+	model.UpdateUser(&user)
+	result.Ok(c, 1, "修改密码成功")
 }

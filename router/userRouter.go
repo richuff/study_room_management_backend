@@ -13,4 +13,5 @@ func userRouter(api *gin.RouterGroup) {
 	userApi.GET("/checkInfo", user.CheckInfo)
 	userApi.POST("/setInfo", user.SetInfo)
 	userApi.POST("/setAvatar", user.SetAvatar)
+	userApi.POST("/forgetPwd", user.ForgetPwd)
 }

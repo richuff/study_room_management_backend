@@ -20,20 +20,26 @@ func (table *User) TableName() string {
 }
 
 func CreateUser(user *User) bool {
-	if GetUserByEmail(user.Email) {
+	if EvaluationUserByEmail(user.Email) {
 		return false
 	}
 	mapper.Open.Create(&user)
 	return true
 }
 
-func GetUserByEmail(email string) bool {
+func EvaluationUserByEmail(email string) bool {
 	user := User{}
 	mapper.Open.Where("email = ?", email).Find(&user)
 	if user.Name != "" {
 		return true
 	}
 	return false
+}
+
+func GetUserByEmail(email string) User {
+	user := User{}
+	mapper.Open.Where("email = ?", email).Find(&user)
+	return user
 }
 
 func GetUserRe(email string) User {
