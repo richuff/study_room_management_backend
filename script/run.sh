@@ -1,5 +1,3 @@
 sh docker_run.sh
 
-cd ./script
-
-sh kube_apply.sh
+sh ./script/kube_apply.sh
