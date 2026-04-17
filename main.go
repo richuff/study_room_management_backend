@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/spf13/viper"
 	"study_room_management_backend/config"
+	"study_room_management_backend/mapper"
 	"study_room_management_backend/router"
 	"study_room_management_backend/utils"
 )
@@ -15,6 +16,8 @@ func main() {
 	utils.InitMysql()
 	utils.InitRedis()
 	r := router.Router()
+
+	r.Use(mapper.RateLimitMiddleware())
 
 	r.Static("/static", config.C.Storage.Local.Path)
 
