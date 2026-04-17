@@ -1,1 +1,0 @@
-docker build -t go-app:v1 .
