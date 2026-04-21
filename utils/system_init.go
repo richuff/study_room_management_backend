@@ -8,7 +8,7 @@ import (
 
 // InitConfig 初始化Config
 func InitConfig() {
-	viper.SetConfigName("application")
+	viper.SetConfigName("application-dev")
 	viper.AddConfigPath("resource")
 	err := viper.ReadInConfig()
 	if err != nil {

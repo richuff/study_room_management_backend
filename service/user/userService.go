@@ -284,10 +284,6 @@ func ForgetPwd(c *gin.Context) {
 		result.ErrorWithCode(c, "该邮箱未注册", 0)
 		return
 	}
-	if user.Password != utils.MakePassword(forgetPwdDto.Password) {
-		result.ErrorWithCode(c, "原密码错误", 0)
-		return
-	}
 	code, err := mapper.Rdb.Get(c, forgetPwdDto.Email).Result()
 	if err != nil {
 		fmt.Println(err)
@@ -298,7 +294,7 @@ func ForgetPwd(c *gin.Context) {
 		result.ErrorWithCode(c, "验证码错误", 0)
 		return
 	}
-	user.Password = utils.MakePassword(forgetPwdDto.RePassword)
+	user.Password = utils.MakePassword(forgetPwdDto.Password)
 	_, err = mapper.Rdb.Del(c, forgetPwdDto.Email).Result()
 	if err != nil {
 		fmt.Println(err)
